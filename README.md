@@ -77,7 +77,7 @@ Finally, the `ExecuteAsync` method passes the caller as usual, but also the pars
 
 # Further usage
 
-## `RocketCommandWithParsing<T>`
+## RocketCommandWithParsing\<T\>
 If you wish, you can override the following method to replace or change the help message for the command:  
 `protected virtual Task DisplayHelp(IRocketPlayer caller, ParserResult<T> parserResult)`
 
@@ -88,7 +88,7 @@ The constructor for `RocketCommandWithParsing<T>` has an additional and optional
 
 ---
 
-## `RocketCommandWithTranslations`
+## RocketCommandWithTranslations
 From the input loaded translations, only the required ones from `DefaultTranslations` are used, so if you find yourself seeing a translation key but no message, despite having it on the default translations **of the plugin**, you should consider adding it to the command instead.
 
 You can reload translations if you ever need to with the following method:  
@@ -104,7 +104,7 @@ By default this method will use the translation key `command_exception`, so you 
 
 ---
 
-## `MultiThreadedRocketCommand`
+## MultiThreadedRocketCommand
 
 You can change the multithreaded setting with the following method:  
 `public void ReloadMultiThreaded(bool multiThreaded)`  
@@ -116,10 +116,3 @@ Since the multithreaded class does not include translations by default, this cla
 
 You can also override the following method to change how multithreading is done, or if it even should be done at all:
 `public virtual void Execute(IRocketPlayer caller, string[] command)`
-
-- Multithreaded commands by default with async support. No more having the server freeze because your command is taking 542873 years to query a database on the main thread.
-- Thread-safe message sending. Sending a message from a different thread and you now have to check if you are on main thread or not? You can stop caring, the code will redirect it to the main thread where necessary. (Note, you should still be careful if you do something like Barricade.Destroy from this).
-- Translations built into the command and exported/exposed as part of the plugin's main translations (or if you want, each command has its own translation file, this will be up to the dev to chose and re-implement).
-- Less error prone translations. User added {1234} onto the translation? Not to worry! you won't get a pesky error because the user did this, simply it will be left as is.
-- Translation is missing? Default it to internal default translations if the user is missing the translation from the translation file. No more my_translation_key in chat and leaving players confused. Instead you can leave them confused in English.
-- Command parsing, forget about reading string[] command and just build a class based on this API https://github.com/commandlineparser/commandline and pass it to the command with parsing when you inherit it. This will simplify all command execution and parameter validation to an external library so you no longer need to write 5000 if statements checking the size of the command array, or if the value is precisely xyz, the library will handle it.
