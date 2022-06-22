@@ -1,0 +1,12 @@
+# Build results
+[Bb]in/
+[Oo]bj/
+[Ll]og/
+
+# Special folders
+.idea/
+.vs/
+[Pp]ackages/
+
+# Unwanted files
+*.user

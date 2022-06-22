@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <RootNamespace>Pustalorc.Libraries.RocketModCommandsExtended</RootNamespace>
+        <TargetFramework>net48</TargetFramework>
+        <Nullable>enable</Nullable>
+        <LangVersion>10</LangVersion>
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <PackageVersion>1.0.0-pre</PackageVersion>
+        <Authors>Pustalorc</Authors>
+        <Company>Pustalorc</Company>
+        <AssemblyVersion>1.0.0</AssemblyVersion>
+        <FileVersion>1.0.0</FileVersion>
+        <Copyright>Copyright © Pustalorc 2022</Copyright>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <Reference Include="Rocket.API">
+            <HintPath>libs\Rocket.API.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Rocket.Core">
+            <HintPath>libs\Rocket.Core.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="Rocket.Unturned">
+            <HintPath>libs\Rocket.Unturned.dll</HintPath>
+            <Private>False</Private>
+        </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="CommandLineParser" Version="2.9.1" />
+        <PackageReference Include="OpenMod.UnityEngine.Redist" Version="2019.4.10" />
+        <PackageReference Include="OpenMod.Unturned.Redist" Version="3.22.8.1" />
+    </ItemGroup>
+
+</Project>
