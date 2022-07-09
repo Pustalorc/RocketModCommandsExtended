@@ -3,16 +3,50 @@ using System.Globalization;
 using System.Threading.Tasks;
 using CommandLine;
 using JetBrains.Annotations;
-using Pustalorc.Libraries.RocketModCommandsExtended.CommandParsing;
+using Pustalorc.Libraries.RocketModCommandsExtended.Abstractions.WithParsing;
 using Rocket.API;
 
 namespace Pustalorc.Libraries.RocketModCommandsExtended.Abstractions;
 
+/// <inheritdoc />
+/// <summary>
+/// Abstract class to add support for automatic command parsing.
+/// Note that this also adds multi-threaded AND translation support.
+/// </summary>
+/// <typeparam name="T">The class used for parsing. Must inherit from CommandParsing</typeparam>
+/// <remarks>
+/// All parsing is handled by the library CommandLineParser, please read their wiki as to how to format the classes:
+/// https://github.com/commandlineparser/commandline/wiki
+/// </remarks>
 public abstract class RocketCommandWithParsing<T> : RocketCommandWithTranslations
-    where T : CommandParsing.CommandParsing
+    where T : CommandParsing
 {
-    [UsedImplicitly] protected Parser CommandParser { get; }
+    /// <summary>
+    /// The parser instance for this command.
+    /// </summary>
+    /// <remarks>
+    /// Early on in development, I had a global parser per project.
+    /// I've since decided against it as to allow people to enable/disable features depending on the specific command.
+    /// </remarks>
+    [UsedImplicitly]
+    protected Parser CommandParser { get; }
 
+    /// <inheritdoc />
+    /// <summary>
+    /// The required constructor for this class.
+    /// Sets if the command will be multi-threaded or not, as well as the currently loaded translations, and offers
+    /// an optional setting for a custom parser.
+    /// </summary>
+    /// <param name="multiThreaded">
+    /// True if you want the command to always run on a separate thread.
+    /// False otherwise.
+    /// </param>
+    /// <param name="translations">
+    /// The currently loaded translations.
+    /// </param>
+    /// <param name="parser">
+    /// An instance of Parser to change the default parsing settings for this command.
+    /// </param>
     protected RocketCommandWithParsing(bool multiThreaded, Dictionary<string, string> translations,
         Parser? parser = null) : base(multiThreaded, translations)
     {
@@ -28,6 +62,10 @@ public abstract class RocketCommandWithParsing<T> : RocketCommandWithTranslation
         });
     }
 
+    /// <inheritdoc />
+    /// <summary>
+    /// Overriden method to add full parsing support, including default help messages if parsing fails.
+    /// </summary>
     public override async Task ExecuteAsync(IRocketPlayer caller, string[] command)
     {
         var result = CommandParser.ParseArguments<T>(command);
@@ -48,6 +86,16 @@ public abstract class RocketCommandWithParsing<T> : RocketCommandWithTranslation
         }
     }
 
+    /// <summary>
+    /// A method to display a help message in case of parsing fail, or if the user inputted -h
+    /// </summary>
+    /// <param name="caller">The user that executed the command.</param>
+    /// <param name="parserResult">
+    /// The parsing result. With this you can check if it failed or if it got parsed successfully for different messages.
+    /// </param>
+    /// <returns>
+    /// A Task for async support.
+    /// </returns>
     [UsedImplicitly]
     protected virtual Task DisplayHelp(IRocketPlayer caller, ParserResult<T> parserResult)
     {
@@ -58,6 +106,18 @@ public abstract class RocketCommandWithParsing<T> : RocketCommandWithTranslation
         return Task.CompletedTask;
     }
 
+    /// <summary>
+    /// An abstract method to override with the final command's implementation.
+    /// </summary>
+    /// <param name="caller">The user that executed the command.</param>
+    /// <param name="parsed">The parsed input from the user, if parsing succeeded.</param>
+    /// <returns>A Task that describes the current method's execution.</returns>
+    /// <remarks>
+    /// In order to allow commands to use the async and await keywords, the method returns Task by default.
+    /// If you do not wish to use the async keyword, please return Task.CompletedTask.
+    ///
+    /// If parsing fails, the method will not execute.
+    /// </remarks>
     [UsedImplicitly]
     public abstract Task ExecuteAsync(IRocketPlayer caller, T parsed);
 }

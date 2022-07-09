@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <LangVersion>10</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>1.0.0-pre</PackageVersion>
+        <PackageVersion>1.0.0</PackageVersion>
         <Authors>Pustalorc</Authors>
         <Company>Pustalorc</Company>
         <AssemblyVersion>1.0.0</AssemblyVersion>
@@ -15,11 +15,19 @@
         <Description>Library to add abstracted command classes to make setups for commands under RocketMod (or LDM, as maintained by Nelson) easier.</Description>
         <RepositoryUrl>https://github.com/Pustalorc/RocketModCommandsExtended</RepositoryUrl>
         <RepositoryType>Github</RepositoryType>
-        <PackageReleaseNotes>First release, but not full release due to possible incoming changes.</PackageReleaseNotes>
+        <PackageReleaseNotes>Added full documentation.
+Changed a few namespaces and organization.
+Renamed 2 methods to be more self-explanatory.
+Added support for command arguments on exception handling.
+Fixed an issue that prevented the DefaultTranslations from being exported from a plugin without adding a new method.
+Modified WithTranslations constructor behaviour to use all the loaded translations it receives, this will prevent some issues with virtual calls (due to the default translations being abstract).
+Modified ReloadTranslations behaviour to clear the loaded translations Dict and refill it by comparing the default translations to the input translations. 
+</PackageReleaseNotes>
         <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
         <TargetFrameworks>net461;net472;net48</TargetFrameworks>
         <AssemblyName>Pustalorc.RocketModCommandsExtended</AssemblyName>
         <Product>Pustalorc.RocketModCommandsExtended</Product>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
