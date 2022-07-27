@@ -24,7 +24,7 @@ For example:
 ```cs
 public sealed class PPlayersCommand : RocketCommandWithParsing<HelpOnly>
 {
-    protected override Dictionary<string, string> DefaultTranslations => new()
+    protected override Dictionary<string, string> DefaultTranslations => new(StringComparer.OrdinalIgnoreCase)
     {
         { "command_exception", "Error during command execution. Command: {0}. Error: {1}. Full exception: {2}" },
         { "error_external_perm_provider", "This command cannot be used with an external permissions provider. Please run `/ap -p`, or make sure no other plugin overrides advanced permissions. External provider: {0}" },
@@ -37,7 +37,7 @@ public sealed class PPlayersCommand : RocketCommandWithParsing<HelpOnly>
     public override string Help => "Lists all permission players on the server.";
     public override string Syntax => "[-h|--help]";
 
-    public PPlayersCommand(bool multiThreaded, Dictionary<string, string> translations) : base(multiThreaded, translations)
+    public PPlayersCommand(bool multiThreaded, Dictionary<string, string> translations) : base(multiThreaded, translations, StringComparer.OrdinalIgnoreCase)
     {
     }
 
