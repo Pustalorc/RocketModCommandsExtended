@@ -2,6 +2,7 @@
 
 namespace Pustalorc.Libraries.RocketModCommandsExtended.Abstractions.WithParsing;
 
+/// <inheritdoc />
 /// <summary>
 /// A basic class in order to pass "the default" to RocketCommandWithTranslations&lt;T&gt;
 /// </summary>

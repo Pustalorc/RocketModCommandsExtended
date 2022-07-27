@@ -5,24 +5,17 @@
         <Nullable>enable</Nullable>
         <LangVersion>10</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>1.0.0</PackageVersion>
+        <PackageVersion>1.0.1</PackageVersion>
         <Authors>Pustalorc</Authors>
         <Company>Pustalorc</Company>
         <AssemblyVersion>1.0.0</AssemblyVersion>
-        <FileVersion>1.0.0</FileVersion>
+        <FileVersion>1.0.1</FileVersion>
         <Copyright>Copyright © Pustalorc 2022</Copyright>
         <PackageId>Pustalorc.RocketModExtended.Commands</PackageId>
         <Description>Library to add abstracted command classes to make setups for commands under RocketMod (or LDM, as maintained by Nelson) easier.</Description>
         <RepositoryUrl>https://github.com/Pustalorc/RocketModCommandsExtended</RepositoryUrl>
         <RepositoryType>Github</RepositoryType>
-        <PackageReleaseNotes>Added full documentation.
-Changed a few namespaces and organization.
-Renamed 2 methods to be more self-explanatory.
-Added support for command arguments on exception handling.
-Fixed an issue that prevented the DefaultTranslations from being exported from a plugin without adding a new method.
-Modified WithTranslations constructor behaviour to use all the loaded translations it receives, this will prevent some issues with virtual calls (due to the default translations being abstract).
-Modified ReloadTranslations behaviour to clear the loaded translations Dict and refill it by comparing the default translations to the input translations. 
-</PackageReleaseNotes>
+        <PackageReleaseNotes>Fixed an issue with the input dictionary not being soft copied, resulting in each command modifying loaded translations for eachother.</PackageReleaseNotes>
         <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
         <TargetFrameworks>net461;net472;net48</TargetFrameworks>
         <AssemblyName>Pustalorc.RocketModCommandsExtended</AssemblyName>
@@ -48,7 +41,7 @@ Modified ReloadTranslations behaviour to clear the loaded translations Dict and 
     <ItemGroup>
         <PackageReference Include="CommandLineParser" Version="2.9.1" />
         <PackageReference Include="OpenMod.UnityEngine.Redist" Version="2019.4.10" />
-        <PackageReference Include="OpenMod.Unturned.Redist" Version="3.22.8.1" />
+        <PackageReference Include="OpenMod.Unturned.Redist" Version="3.22.13" />
     </ItemGroup>
 
 </Project>

@@ -31,6 +31,50 @@ public abstract class RocketCommandWithTranslations : MultiThreadedRocketCommand
     /// </summary>
     protected Dictionary<string, string> Translations { get; }
 
+    /// <inheritdoc />
+    /// <summary>
+    /// The required constructor for this class.
+    /// Sets if the command will be multi-threaded or not, as well as the currently loaded translations.
+    /// </summary>
+    /// <param name="multiThreaded">
+    /// True if you want the command to always run on a separate thread.
+    /// False otherwise.
+    /// </param>
+    /// <param name="stringComparer">
+    /// The comparer that the internal translations dictionary should use.
+    /// </param>
+    protected RocketCommandWithTranslations(bool multiThreaded, StringComparer stringComparer) : this(multiThreaded,
+        new Dictionary<string, string>(), stringComparer)
+    {
+    }
+
+    /// <inheritdoc />
+    /// <summary>
+    /// The required constructor for this class.
+    /// Sets if the command will be multi-threaded or not, as well as the currently loaded translations.
+    /// </summary>
+    /// <param name="multiThreaded">
+    /// True if you want the command to always run on a separate thread.
+    /// False otherwise.
+    /// </param>
+    /// <param name="translations">
+    /// The currently loaded translations.
+    /// </param>
+    /// <param name="stringComparer">
+    /// The comparer that the internal translations dictionary should use.
+    /// </param>
+    /// <remarks>
+    /// Please note that the constructor will not filter the currently loaded translations.
+    /// This is due to a limitation with C#, where the base type constructors are called first,
+    /// so the default translations might not be set yet.
+    /// Also note, if no translations exist yet (translations file didn't exist, some error occurred, etc)
+    /// please use the constructor that doesn't take a dictionary, followed by calling ReloadTranslations on the command.
+    /// </remarks>
+    protected RocketCommandWithTranslations(bool multiThreaded, Dictionary<string, string> translations,
+        StringComparer stringComparer) : base(multiThreaded)
+    {
+        Translations = new Dictionary<string, string>(translations, stringComparer);
+    }
 
     /// <inheritdoc />
     /// <summary>
@@ -51,14 +95,14 @@ public abstract class RocketCommandWithTranslations : MultiThreadedRocketCommand
     /// 
     /// Also note, if no translations exist yet (translations file didn't exist, some error occurred, etc)
     /// please instantiate the command with an empty dictionary, followed by calling ReloadTranslations on the command.
-    ///
+    /// 
     /// Final note, if you do not wish to filter at all the translations, you can also pass an empty dictionary.
     /// This minimum is required to determine what comparer to use when getting the translation later on.
     /// </remarks>
     protected RocketCommandWithTranslations(bool multiThreaded, Dictionary<string, string> translations) : base(
         multiThreaded)
     {
-        Translations = translations;
+        Translations = new Dictionary<string, string>(translations, translations.Comparer);
     }
 
     /// <summary>
