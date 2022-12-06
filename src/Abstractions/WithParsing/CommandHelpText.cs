@@ -9,10 +9,11 @@ using Rocket.API;
 namespace Pustalorc.Libraries.RocketModCommandsExtended.Abstractions.WithParsing;
 
 /// <summary>
-/// A basic (and mostly copied from the command parsing lib) implementation of a full custom help message.
+///     A basic (and mostly copied from the command parsing lib) implementation of a full custom help message.
 /// </summary>
 /// <remarks>
-/// This class should be reworked to be translatable, but also not have to re-generate the full help message every time.
+///     This class should be reworked to be translatable, but also not have to re-generate the full help message every
+///     time.
 /// </remarks>
 [UsedImplicitly]
 public class CommandHelpText

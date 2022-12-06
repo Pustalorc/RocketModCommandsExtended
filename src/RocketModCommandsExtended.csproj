@@ -3,21 +3,23 @@
     <PropertyGroup>
         <RootNamespace>Pustalorc.Libraries.RocketModCommandsExtended</RootNamespace>
         <Nullable>enable</Nullable>
-        <LangVersion>10</LangVersion>
+        <LangVersion>11</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>1.0.1</PackageVersion>
+        <PackageVersion>1.1.0</PackageVersion>
         <Authors>Pustalorc</Authors>
         <Company>Pustalorc</Company>
         <AssemblyVersion>1.0.0</AssemblyVersion>
-        <FileVersion>1.0.1</FileVersion>
+        <FileVersion>1.1.0</FileVersion>
         <Copyright>Copyright © Pustalorc 2022</Copyright>
         <PackageId>Pustalorc.RocketModExtended.Commands</PackageId>
         <Description>Library to add abstracted command classes to make setups for commands under RocketMod (or LDM, as maintained by Nelson) easier.</Description>
         <RepositoryUrl>https://github.com/Pustalorc/RocketModCommandsExtended</RepositoryUrl>
         <RepositoryType>Github</RepositoryType>
-        <PackageReleaseNotes>Fixed an issue with the input dictionary not being soft copied, resulting in each command modifying loaded translations for eachother.</PackageReleaseNotes>
+        <PackageReleaseNotes>Added constructors to parsing commands to support the string comparers of the translating commands.
+Added a basic "command_usage" message to be sent to the caller if they are not a console when using `-h` or simply not using the correct syntax for the command.
+Added logging to console directly when an exception is raised unless the caller is console. Should fix invisible exceptions.</PackageReleaseNotes>
         <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
-        <TargetFrameworks>net461;net472;net48</TargetFrameworks>
+        <TargetFrameworks>net461;net472;net48;net481</TargetFrameworks>
         <AssemblyName>Pustalorc.RocketModCommandsExtended</AssemblyName>
         <Product>Pustalorc.RocketModCommandsExtended</Product>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
@@ -41,7 +43,7 @@
     <ItemGroup>
         <PackageReference Include="CommandLineParser" Version="2.9.1" />
         <PackageReference Include="OpenMod.UnityEngine.Redist" Version="2019.4.10" />
-        <PackageReference Include="OpenMod.Unturned.Redist" Version="3.22.13" />
+        <PackageReference Include="OpenMod.Unturned.Redist" Version="3.22.17" />
     </ItemGroup>
 
 </Project>
