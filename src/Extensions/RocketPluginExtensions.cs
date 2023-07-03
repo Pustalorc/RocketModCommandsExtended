@@ -12,6 +12,7 @@ namespace Pustalorc.Libraries.RocketModCommandsExtended.Extensions;
 ///     Extensions for <see cref="IRocketPlugin" />s so they can get the translations for
 ///     <see cref="RocketCommandWithTranslations" /> as well as load and reload them.
 /// </summary>
+[PublicAPI]
 public static class RocketPluginExtensions
 {
     /// <summary>
@@ -24,7 +25,6 @@ public static class RocketPluginExtensions
     ///     If left null <see cref="StringComparer.OrdinalIgnoreCase" /> will be used.
     /// </param>
     /// <returns>A <see cref="Dictionary{TKey,TValue}" /> with the translations of that plugin.</returns>
-    [UsedImplicitly]
     public static Dictionary<string, string> GetCurrentTranslationsForCommands(this IRocketPlugin plugin,
         StringComparer? comparerOverride = null)
     {
@@ -38,7 +38,6 @@ public static class RocketPluginExtensions
     /// </summary>
     /// <param name="commands">The commands to load and register.</param>
     /// <param name="plugin">The plugin to register new translations to.</param>
-    [UsedImplicitly]
     public static void LoadAndRegisterCommands(this IEnumerable<MultiThreadedRocketCommand> commands,
         IRocketPlugin plugin)
     {
@@ -71,7 +70,6 @@ public static class RocketPluginExtensions
     /// </summary>
     /// <param name="commands">The commands to reload.</param>
     /// <param name="plugin">The plugin where the translations are stored.</param>
-    [UsedImplicitly]
     public static void ReloadCommands(this IEnumerable<MultiThreadedRocketCommand> commands, IRocketPlugin plugin)
     {
         var currentTranslations = plugin.GetCurrentTranslationsForCommands();

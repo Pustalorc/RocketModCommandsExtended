@@ -11,12 +11,12 @@ namespace Pustalorc.Libraries.RocketModCommandsExtended.Abstractions.WithParsing
 ///     Documentation for how these should be made is here:
 ///     https://github.com/commandlineparser/commandline/wiki
 /// </remarks>
+[PublicAPI]
 public abstract class CommandParsing
 {
     /// <summary>
     ///     Determines if the help message should be shown.
     /// </summary>
-    [UsedImplicitly]
     [Option('h', "help", HelpText = "Displays the current help information about the command.")]
     public bool Help { get; set; }
 }

@@ -5,17 +5,21 @@
         <Nullable>enable</Nullable>
         <LangVersion>11</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <PackageVersion>1.2.0</PackageVersion>
+        <PackageVersion>1.2.1</PackageVersion>
         <Authors>Pustalorc</Authors>
         <Company>Pustalorc</Company>
         <AssemblyVersion>1.0.0</AssemblyVersion>
-        <FileVersion>1.2.0</FileVersion>
-        <Copyright>Copyright © Pustalorc 2022</Copyright>
+        <FileVersion>1.2.1</FileVersion>
+        <Copyright>Copyright © Pustalorc 2022-2023</Copyright>
         <PackageId>Pustalorc.RocketModExtended.Commands</PackageId>
         <Description>Library to add abstracted command classes to make setups for commands under RocketMod (or LDM, as maintained by Nelson) easier.</Description>
         <RepositoryUrl>https://github.com/Pustalorc/RocketModCommandsExtended</RepositoryUrl>
         <RepositoryType>Github</RepositoryType>
-        <PackageReleaseNotes>Added a few extensions to reduce duplicate code and help with the load and registration process of commands.</PackageReleaseNotes>
+        <PackageReleaseNotes>Updated unturned and unity redist libraries to latest versions.
+            Created a translation key constants file, for the 2 constant translations that were always used.
+            Replaced all `[UsedImplicitly]` with `[PublicAPI]`
+            Core change on the `Execute()` method to hopefully support the async execute actually being ran in the main thread, however does have to be tested yet. Multithreaded op should not be affected.
+        </PackageReleaseNotes>
         <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
         <TargetFrameworks>net461;net472;net48;net481</TargetFrameworks>
         <AssemblyName>Pustalorc.RocketModCommandsExtended</AssemblyName>
@@ -40,8 +44,8 @@
 
     <ItemGroup>
         <PackageReference Include="CommandLineParser" Version="2.9.1"/>
-        <PackageReference Include="OpenMod.UnityEngine.Redist" Version="2019.4.10"/>
-        <PackageReference Include="OpenMod.Unturned.Redist" Version="3.22.17"/>
+        <PackageReference Include="OpenMod.UnityEngine.Redist" Version="2020.3.38"/>
+        <PackageReference Include="OpenMod.Unturned.Redist" Version="3.23.7"/>
     </ItemGroup>
 
 </Project>

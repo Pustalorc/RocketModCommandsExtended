@@ -14,7 +14,7 @@ namespace Pustalorc.Libraries.RocketModCommandsExtended.Abstractions.WithParsing
 ///     In the end, this class exists to mitigate devs who would just put the "missing" or "required" class instead of
 ///     doing it right.
 /// </remarks>
-[UsedImplicitly]
+[PublicAPI]
 public class HelpOnly : CommandParsing
 {
 }

@@ -10,6 +10,7 @@ namespace Pustalorc.Libraries.RocketModCommandsExtended.Abstractions;
 ///     Abstract class to add support for built in translations.
 ///     Note that this also adds multi-threaded support.
 /// </summary>
+[PublicAPI]
 public abstract class RocketCommandWithTranslations : MultiThreadedRocketCommand
 {
     /// <summary>
@@ -22,13 +23,11 @@ public abstract class RocketCommandWithTranslations : MultiThreadedRocketCommand
     ///     This is to support the RaisedException method so it logs the correct message.
     ///     See MultiThreadedRocketCommand.RaisedException for what kind of message you should be aiming to.
     /// </remarks>
-    [UsedImplicitly]
     public abstract Dictionary<string, string> DefaultTranslations { get; }
 
     /// <summary>
     ///     The currently loaded translations from the translations file.
     /// </summary>
-    [UsedImplicitly]
     protected Dictionary<string, string> Translations { get; }
 
     /// <inheritdoc />
@@ -114,7 +113,6 @@ public abstract class RocketCommandWithTranslations : MultiThreadedRocketCommand
     ///     ones.
     ///     This method will also NOT change the string comparer of the loaded translations, as that is set in the constructor.
     /// </remarks>
-    [UsedImplicitly]
     public virtual void ReloadTranslations(Dictionary<string, string> translations)
     {
         Translations.Clear();
@@ -158,7 +156,6 @@ public abstract class RocketCommandWithTranslations : MultiThreadedRocketCommand
     ///     case
     ///     they'll be confused why they are seeing an un-translated message)
     /// </remarks>
-    [UsedImplicitly]
     public virtual string Translate(string translationKey, params object?[] placeholder)
     {
         if (!Translations.TryGetValue(translationKey, out var translation) &&
@@ -180,7 +177,6 @@ public abstract class RocketCommandWithTranslations : MultiThreadedRocketCommand
     /// <param name="player">The player to send the translated message to.</param>
     /// <param name="translationKey">The key that identifies the translation message in the loaded translations.</param>
     /// <param name="placeholder">A params object array that allows to input any data into the translation.</param>
-    [UsedImplicitly]
     protected virtual void SendTranslatedMessage(IRocketPlayer player, string translationKey,
         params object?[] placeholder)
     {
@@ -192,7 +188,6 @@ public abstract class RocketCommandWithTranslations : MultiThreadedRocketCommand
     /// </summary>
     /// <param name="translationKey">The key that identifies the translation message in the loaded translations.</param>
     /// <param name="placeholder">A params object array that allows to input any data into the translation.</param>
-    [UsedImplicitly]
     protected virtual void SendTranslatedMessage(string translationKey, params object?[] placeholder)
     {
         SendMessage(Translate(translationKey, placeholder));
@@ -201,7 +196,7 @@ public abstract class RocketCommandWithTranslations : MultiThreadedRocketCommand
     /// <inheritdoc />
     protected override void SendExceptionToCaller(IRocketPlayer caller, string[] commandInput, Exception exception)
     {
-        SendTranslatedMessage(caller, "command_exception", Name, string.Join(" ", commandInput), exception.Message,
-            exception);
+        SendTranslatedMessage(caller, TranslationKeys.CommandExceptionKey, Name, string.Join(" ", commandInput),
+            exception.Message, exception);
     }
 }

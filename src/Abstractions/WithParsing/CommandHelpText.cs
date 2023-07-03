@@ -15,7 +15,7 @@ namespace Pustalorc.Libraries.RocketModCommandsExtended.Abstractions.WithParsing
 ///     This class should be reworked to be translatable, but also not have to re-generate the full help message every
 ///     time.
 /// </remarks>
-[UsedImplicitly]
+[PublicAPI]
 public class CommandHelpText
 {
 #pragma warning disable CS1591
@@ -64,8 +64,6 @@ public class CommandHelpText
         return options.SelectMany(selector).Concat(values.SelectMany(selector));
     }
 
-
-    [UsedImplicitly]
     public virtual void AddParsingError<T>(NotParsed<T> notParsed) where T : CommandParsing
     {
         HelpText.Add("Errors during parsing:");

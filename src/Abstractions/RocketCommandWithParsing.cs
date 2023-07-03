@@ -19,6 +19,7 @@ namespace Pustalorc.Libraries.RocketModCommandsExtended.Abstractions;
 ///     All parsing is handled by the library CommandLineParser, please read their wiki as to how to format the classes:
 ///     https://github.com/commandlineparser/commandline/wiki
 /// </remarks>
+[PublicAPI]
 public abstract class RocketCommandWithParsing<T> : RocketCommandWithTranslations
     where T : CommandParsing
 {
@@ -29,7 +30,6 @@ public abstract class RocketCommandWithParsing<T> : RocketCommandWithTranslation
     ///     Early on in development, I had a global parser per project.
     ///     I've since decided against it as to allow people to enable/disable features depending on the specific command.
     /// </remarks>
-    [UsedImplicitly]
     protected Parser CommandParser { get; }
 
     /// <inheritdoc />
@@ -169,12 +169,11 @@ public abstract class RocketCommandWithParsing<T> : RocketCommandWithTranslation
     ///     the command.
     ///     If you wish to change the functionality or the message that the console receives, simply override this method.
     /// </remarks>
-    [UsedImplicitly]
     protected virtual Task DisplayHelp(IRocketPlayer caller, ParserResult<T> parserResult)
     {
         if (caller is not ConsolePlayer)
         {
-            SendTranslatedMessage(caller, "command_usage", Name, string.Join(" ", Syntax));
+            SendTranslatedMessage(caller, TranslationKeys.CommandUsageKey, Name, string.Join(" ", Syntax));
             return Task.CompletedTask;
         }
 
@@ -196,6 +195,5 @@ public abstract class RocketCommandWithParsing<T> : RocketCommandWithTranslation
     ///     If you do not wish to use the async keyword, please return Task.CompletedTask.
     ///     If parsing fails, the method will not execute.
     /// </remarks>
-    [UsedImplicitly]
     public abstract Task ExecuteAsync(IRocketPlayer caller, T parsed);
 }

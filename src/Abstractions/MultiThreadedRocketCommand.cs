@@ -14,6 +14,7 @@ namespace Pustalorc.Libraries.RocketModCommandsExtended.Abstractions;
 /// <summary>
 ///     Abstract class to add support for a multi-threaded and asynchronous command.
 /// </summary>
+[PublicAPI]
 public abstract class MultiThreadedRocketCommand : IRocketCommand
 {
     /// <summary>
@@ -84,6 +85,39 @@ public abstract class MultiThreadedRocketCommand : IRocketCommand
     }
 
     /// <summary>
+    ///     Default implementation of RocketMod's Execute method.
+    ///     This implementation will run ExecuteAsync in a separate thread, but will wait and run the method synchronously
+    ///     if MultiThreadedExecution is set to false.
+    /// </summary>
+    /// <param name="caller">The user that executed the command.</param>
+    /// <param name="command">The parameters passed into the command by the user.</param>
+    public virtual void Execute(IRocketPlayer caller, string[] command)
+    {
+        if (!MultiThreadedExecution)
+            AsyncExecute(caller, command).RunSynchronously();
+        else
+            Task.Run(async Task () => await AsyncExecute(caller, command));
+    }
+
+    /// <summary>
+    ///     Calls ExecuteAsync and handles an exception being thrown.
+    /// </summary>
+    /// <param name="caller">The user that executed the command.</param>
+    /// <param name="command">The parameters passed into the command by the user.</param>
+    protected virtual async Task AsyncExecute(IRocketPlayer caller, string[] command)
+    {
+        try
+        {
+            await ExecuteAsync(caller, command);
+        }
+        catch (Exception ex)
+        {
+            RaisedException(caller, command, ex);
+            throw;
+        }
+    }
+
+    /// <summary>
     ///     Obsolete method due to naming change.
     ///     Simply sets MultiThreadedExecution property to its input.
     /// </summary>
@@ -92,7 +126,6 @@ public abstract class MultiThreadedRocketCommand : IRocketCommand
     ///     False otherwise.
     /// </param>
     [Obsolete("Use SetMultiThreadedExecution instead.")]
-    [UsedImplicitly]
     public void ReloadMultiThreaded(bool multiThreaded)
     {
         SetMultiThreadedExecution(multiThreaded);
@@ -118,7 +151,6 @@ public abstract class MultiThreadedRocketCommand : IRocketCommand
     ///     Since this method uses UnturnedChat.Say by default, one should override it and change the call to
     ///     ChatManager.SendMessage if they wish to support rich text right off the bat and permanently.
     /// </remarks>
-    [UsedImplicitly]
     protected virtual void SendMessage(string message)
     {
         if (Thread.CurrentThread.IsGameThread())
@@ -139,7 +171,6 @@ public abstract class MultiThreadedRocketCommand : IRocketCommand
     ///     If you override this method and do not wish to lose that functionality,
     ///     you will have to manually check if its console and log to console.
     /// </remarks>
-    [UsedImplicitly]
     protected virtual void SendMessage(IRocketPlayer player, string message)
     {
         if (Thread.CurrentThread.IsGameThread())
@@ -156,7 +187,6 @@ public abstract class MultiThreadedRocketCommand : IRocketCommand
     /// <param name="exception">The exception that was raised.</param>
     [Obsolete("Use RaisedException instead, as that supports the input array, and has more self-descriptive naming.",
         true)]
-    [UsedImplicitly]
     protected virtual void LogException(IRocketPlayer caller, Exception exception)
     {
         SendMessage(caller,
@@ -202,37 +232,6 @@ public abstract class MultiThreadedRocketCommand : IRocketCommand
     }
 
     /// <summary>
-    ///     Default implementation of RocketMod's Execute method.
-    ///     This implementation will run ExecuteAsync in a separate thread, but will wait and run the method synchronously
-    ///     if MultiThreadedExecution is set to false.
-    /// </summary>
-    /// <param name="caller">The user that executed the command.</param>
-    /// <param name="command">The parameters passed into the command by the user.</param>
-    /// <remarks>
-    ///     Since ExecuteAsync is an asynchronous (Task) method, it has to be forcefully ran with Task.Run.
-    ///     This requirement is required in order to not cause a deadlock or race condition when running the async method
-    ///     from the same thread, whilst that thread is locked waiting for the async method to finish.
-    /// </remarks>
-    public virtual void Execute(IRocketPlayer caller, string[] command)
-    {
-        var task = Task.Run(async Task() =>
-        {
-            try
-            {
-                await ExecuteAsync(caller, command);
-            }
-            catch (Exception ex)
-            {
-                RaisedException(caller, command, ex);
-                throw;
-            }
-        });
-
-        if (!MultiThreadedExecution)
-            task.Wait();
-    }
-
-    /// <summary>
     ///     An abstract method to override with the final command's implementation.
     /// </summary>
     /// <param name="caller">The user that executed the command.</param>
@@ -242,6 +241,5 @@ public abstract class MultiThreadedRocketCommand : IRocketCommand
     ///     In order to allow commands to use the async and await keywords, the method returns Task by default.
     ///     If you do not wish to use the async keyword, please return Task.CompletedTask.
     /// </remarks>
-    [UsedImplicitly]
     public abstract Task ExecuteAsync(IRocketPlayer caller, string[] command);
 }
