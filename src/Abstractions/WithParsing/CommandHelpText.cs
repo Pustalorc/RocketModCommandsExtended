@@ -16,24 +16,19 @@ namespace Pustalorc.Libraries.RocketModCommandsExtended.Abstractions.WithParsing
 ///     time.
 /// </remarks>
 [PublicAPI]
-public class CommandHelpText
+public class CommandHelpText(IRocketCommand command)
 {
 #pragma warning disable CS1591
-    protected List<string> HelpText { get; }
-
-    public CommandHelpText(IRocketCommand command)
-    {
-        HelpText = new List<string>
-        {
-            $"Command: {command.Name}",
-            $"{command.Help}",
-            "",
-            $"Aliases: {string.Join(", ", command.Aliases)}",
-            $"Useable by: {command.AllowedCaller}",
-            $"Permissions: {string.Join(", ", command.Permissions)}",
-            $"Command usage: {command.Name} {command.Syntax}"
-        };
-    }
+    protected List<string> HelpText { get; } =
+    [
+        $"Command: {command.Name}",
+        $"{command.Help}",
+        "",
+        $"Aliases: {string.Join(", ", command.Aliases)}",
+        $"Useable by: {command.AllowedCaller}",
+        $"Permissions: {string.Join(", ", command.Permissions)}",
+        $"Command usage: {command.Name} {command.Syntax}"
+    ];
 
     public virtual void AddParsingInformation<T>(ParserResult<T> parserResult) where T : CommandParsing
     {

@@ -53,7 +53,7 @@ public abstract class MultiThreadedRocketCommand : IRocketCommand
     /// <summary>
     ///     A list of aliases for the commands. Empty by default, but you can override it to add whatever you wish.
     /// </summary>
-    public virtual List<string> Aliases => new();
+    public virtual List<string> Aliases => [];
 
     /// <summary>
     ///     A list of permissions required to execute the command.
@@ -65,7 +65,7 @@ public abstract class MultiThreadedRocketCommand : IRocketCommand
     ///     additional permissions here would allow the command to be executed still, even if they dont have the permission
     ///     for the command name.
     /// </remarks>
-    public virtual List<string> Permissions => new() { Name };
+    public virtual List<string> Permissions => [Name];
 
     /// <summary>
     ///     The setting determining if this command is multi-threaded or not.

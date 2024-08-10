@@ -3,20 +3,20 @@
     <PropertyGroup>
         <RootNamespace>Pustalorc.Libraries.RocketModCommandsExtended</RootNamespace>
         <Nullable>enable</Nullable>
-        <LangVersion>11</LangVersion>
+        <LangVersion>12</LangVersion>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
         <Authors>Pustalorc</Authors>
         <Company>Pustalorc</Company>
         <AssemblyVersion>1.0.0</AssemblyVersion>
-        <PackageVersion>1.2.2</PackageVersion>
-        <FileVersion>1.2.2</FileVersion>
-        <Version>1.2.2</Version>
+        <PackageVersion>1.2.3</PackageVersion>
+        <FileVersion>1.2.3</FileVersion>
+        <Version>1.2.3</Version>
         <Copyright>Copyright © Pustalorc 2022-2023</Copyright>
         <PackageId>Pustalorc.RocketModExtended.Commands</PackageId>
         <Description>Library to add abstracted command classes to make setups for commands under RocketMod (or LDM, as maintained by Nelson) easier.</Description>
         <RepositoryUrl>https://github.com/Pustalorc/RocketModCommandsExtended</RepositoryUrl>
         <RepositoryType>Github</RepositoryType>
-        <PackageReleaseNotes>Updated all libraries and added PrivateAssets to all necessary packages.</PackageReleaseNotes>
+        <PackageReleaseNotes>Update LangVersion to 12</PackageReleaseNotes>
         <PackageLicenseExpression>LGPL-3.0-or-later</PackageLicenseExpression>
         <TargetFrameworks>net461;net472;net48;net481</TargetFrameworks>
         <AssemblyName>Pustalorc.RocketModCommandsExtended</AssemblyName>
